@@ -74,7 +74,13 @@ export const STATUS_META: Record<
   finalized: { label: "Finalized", tone: "zinc" },
 };
 
-/** Can a participant still submit an answer? */
+/** Can a participant still submit a commitment? */
 export function canSubmit(b: Bounty, nowSeconds = Date.now() / 1000): boolean {
   return !b.judged && !b.finalized && Number(b.deadline) > nowSeconds;
 }
+
+/** Can a participant reveal their answer? */
+export function canReveal(b: Bounty, nowSeconds = Date.now() / 1000): boolean {
+  return !b.judged && !b.finalized && Number(b.deadline) <= nowSeconds;
+}
+
