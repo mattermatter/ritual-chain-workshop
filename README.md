@@ -9,20 +9,20 @@ This repository contains the secured **AI Bounty Judge** system. The submission 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Participant
+    actor Submitter
     actor Owner
     participant Contract as AIJudge Smart Contract
     participant Browser as Local Storage
 
-    Note over Participant, Contract: Commit Phase (Before Deadline)
-    Participant->>Browser: Write Answer
+    Note over Submitter, Contract: Commit Phase (Before Deadline)
+    Submitter->>Browser: Write Answer
     Note over Browser: Generate random 32-byte salt<br/>Store {answer, salt} in LocalStorage
-    Participant->>Contract: submitCommitment(bountyId, commitmentHash)
+    Submitter->>Contract: submitCommitment(bountyId, commitmentHash)
     Note over Contract: Stores commitment mapping
 
-    Note over Participant, Contract: Reveal Phase (After Deadline)
-    Participant->>Browser: Retrieve {answer, salt}
-    Participant->>Contract: revealAnswer(bountyId, answer, salt)
+    Note over Submitter, Contract: Reveal Phase (After Deadline)
+    Submitter->>Browser: Retrieve {answer, salt}
+    Submitter->>Contract: revealAnswer(bountyId, answer, salt)
     Note over Contract: Verifies hash & sender<br/>Deletes commitment mapping<br/>Saves plaintext submission
 
     Note over Owner, Contract: Judging Phase (After Reveal)
